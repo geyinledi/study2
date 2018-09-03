@@ -14,6 +14,12 @@
         <relativePath/>
     </parent>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jmeter.result.jtl.dir>${env.WORKSPACE}/Report/${env.BUILD_ID}/jtl</jmeter.result.jtl.dir>
+		<jmeter.result.html.dir>${env.WORKSPACE}/Report/${evn.BUILD_ID}/html</jmeter.result.html.dir>
+	</properties>
+	
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -50,22 +56,60 @@
 				<groupId>com.lazerycode.jmeter</groupId>
 				<artifactId>jmeter-maven-plugin</artifactId>
 				<version>2.7.0</version>
+				<configuration>
+					<resultsFileFormat>xml</resultsFileFormat>
+					<ignoreResultFailures>true</ignoreResultFailures>
+					<testResultsTimestamp>false</testResultsTimestamp>
+					<testFilesIncluded>
+						<jMeterTestFile>testplan.jmx</jMeterTestFile>
+						<jMeterTestFile>hellp.jmx</jMeterTestFile>
+					</testFilesIncluded>
+					<resultsDirectory>${jmeter.result.jtl.dir}</resultsDirectory>
+				</configuration>
 				<executions>
 					<execution>
 						<id>jmeter-tests</id>
+						<phase>verify</phase>
 						<goals>
 							<goal>jmeter</goal>
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>xml-maven-plugin</artifactId>
+				<version>1.0-beta-3</version>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>transform</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
-					<testFilesIncluded>
-						<jMeterTestFile>testplan.jmx</jMeterTestFile>
-						<jMeterTestFile>hellp.jmx</jMeterTestFile>
-					</testFilesIncluded>
-					<resultsFileNameDateFormat>MMMM, yyyy</resultsFileNameDateFormat>
-					<jmeterVersion>3.2</jmeterVersion>
+					<transformationSets>
+						<transformationSet>
+							<dir>${jmeter.result.jtl.dir}</dir>
+							<stylesheet>src\test\resources\jmeter.results.shanhe.me.xsl</stylesheet>
+							<outputDir>${jmeter.result.html.dir}</outputDir>
+							<fileMappers>
+								<fileMapper
+									implementation = "org.codehaus.plexus.components.filemappers.FileExtensionMapper">
+									<targetExtension>html</targetExtension>
+								</fileMapper>
+							</fileMappers>
+						</transformationSet>
+					</transformationSets>
 				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>net.sf.saxon</groupId>
+						<artifactId>saxon</artifactId>
+						<version>8.7</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
