@@ -23,6 +23,7 @@ public class ConfigController {
     @Autowired
     private User user;
 
+    
     @RequestMapping(value = "index1", method = RequestMethod.GET)
     public String index() {
     	
