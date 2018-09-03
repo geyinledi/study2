@@ -43,8 +43,13 @@
         	<version>2.2.2</version>
         </dependency>
     </dependencies>
+<<<<<<< HEAD
 	
 	<build>
+=======
+    
+<build>
+>>>>>>> fc6c1e94e2eb0017e099ecf4e9fa7f73e615be1f
 		<plugins>
 			<plugin>
 				<groupId>com.lazerycode.jmeter</groupId>
@@ -69,4 +74,8 @@
 			</plugin>
 		</plugins>
 	</build>
+<<<<<<< HEAD
 </project>
+=======
+</project>
+>>>>>>> fc6c1e94e2eb0017e099ecf4e9fa7f73e615be1f
