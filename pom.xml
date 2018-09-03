@@ -60,8 +60,8 @@
 				</executions>
 				<configuration>
 					<testFilesIncluded>
+						<jMeterTestFile>testplan.jmx</jMeterTestFile>
 						<jMeterTestFile>hellp.jmx</jMeterTestFile>
-						<jMeterTestFile>Test2.jmx</jMeterTestFile>
 					</testFilesIncluded>
 					<resultsFileNameDateFormat>MMMM, yyyy</resultsFileNameDateFormat>
 					<jmeterVersion>3.2</jmeterVersion>
