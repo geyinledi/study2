@@ -70,8 +70,7 @@
                    <testFilesIncluded>                 
                   <!-- //ָ�����е�jmeter�ű� -->                     	
                             <jMeterTestFile>testplan.jmx</jMeterTestFile>            
-                            <jMeterTestFile>testmaven1.jmx</jMeterTestFile>            
-                            <jMeterTestFile>testmaven2.jmx</jMeterTestFile>    
+                            <jMeterTestFile>hellp.jmx</jMeterTestFile>              
                      <!-- 
                      	//ʹ��������ʽ
                       <jMeterTestFile>test*.jmx</jMeterTestFile>  -->
