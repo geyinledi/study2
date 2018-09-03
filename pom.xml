@@ -43,13 +43,8 @@
         	<version>2.2.2</version>
         </dependency>
     </dependencies>
-<<<<<<< HEAD
-	
-	<build>
-=======
     
-<build>
->>>>>>> fc6c1e94e2eb0017e099ecf4e9fa7f73e615be1f
+	<build>
 		<plugins>
 			<plugin>
 				<groupId>com.lazerycode.jmeter</groupId>
@@ -65,7 +60,7 @@
 				</executions>
 				<configuration>
 					<testFilesIncluded>
-						<jMeterTestFile>Test1.jmx</jMeterTestFile>
+						<jMeterTestFile>hellp.jmx</jMeterTestFile>
 						<jMeterTestFile>Test2.jmx</jMeterTestFile>
 					</testFilesIncluded>
 					<resultsFileNameDateFormat>MMMM, yyyy</resultsFileNameDateFormat>
@@ -74,8 +69,4 @@
 			</plugin>
 		</plugins>
 	</build>
-<<<<<<< HEAD
 </project>
-=======
-</project>
->>>>>>> fc6c1e94e2eb0017e099ecf4e9fa7f73e615be1f
