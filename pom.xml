@@ -51,66 +51,98 @@
     </dependencies>
     
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>com.lazerycode.jmeter</groupId>
-				<artifactId>jmeter-maven-plugin</artifactId>
-				<version>2.7.0</version>
-				<configuration>
-					<resultsFileFormat>xml</resultsFileFormat>
-					<ignoreResultFailures>true</ignoreResultFailures>
-					<testResultsTimestamp>false</testResultsTimestamp>
-					<testFilesIncluded>
-						<jMeterTestFile>testplan.jmx</jMeterTestFile>
-						<jMeterTestFile>hellp.jmx</jMeterTestFile>
-					</testFilesIncluded>
-					<resultsDirectory>${jmeter.result.jtl.dir}</resultsDirectory>
-				</configuration>
-				<executions>
-					<execution>
-						<id>jmeter-tests</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>jmeter</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-			    <artifactId>xml-maven-plugin</artifactId>
-			    <version>1.0-beta-3</version>
-				<executions>
-					<execution>
-						<phase>verify</phase>
-						<goals>
-							<goal>transform</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<transformationSets>
-						<transformationSet>
-							<dir>${jmeter.result.jtl.dir}</dir>
-							<stylesheet>src\test\resources\jmeter.results.shanhe.me.xsl</stylesheet>
-							<outputDir>${jmeter.result.html.dir}</outputDir>
-							<fileMappers>
-								<fileMapper
-									implementation = "org.codehaus.plexus.components.filemappers.FileExtensionMapper">
-									<targetExtension>html</targetExtension>
-								</fileMapper>
-							</fileMappers>
-						</transformationSet>
-					</transformationSets>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>net.sf.saxon</groupId>
-						<artifactId>saxon</artifactId>
-						<version>8.7</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-		</plugins>
-	</build>
+       <plugins>	  
+		<plugin>
+		<!-- 核心插件，用来执行jmx脚本，注意版本号，2.1.0可以使用用jmeter3.1生成的脚本。最新的2.2.0使用jmeter3.2生成的脚本 -->
+               <groupId>com.lazerycode.jmeter</groupId>
+               <artifactId>jmeter-maven-plugin</artifactId>
+               <version>2.1.0</version>           
+                 <configuration>
+                 <!-- 增加jar包,需要先将jar注册到本地maven仓库，打开cmd使用如下命令-->
+				 <!--mvn install:install-file -Dfile=D:\GIT\ZyzxAPIAutoTest\TXPTAPIAutoTest\plugns\jmeter-plugins-json.jar -DgroupId=com.jmeter.chajian -DartifactId=jmeter-plugins-json -Dversion=2.6 -Dpackaging=jar -->
+	            	
+					<!-- 设置jmeter生成结果文件格式-->
+                    <resultsFileFormat>xml</resultsFileFormat>
+					<!-- 设置忽略失败是否停止运行-->
+                    <ignoreResultFailures>true</ignoreResultFailures>
+					<!--设置结果是否有时间戳-->
+                    <testResultsTimestamp>false</testResultsTimestamp>
+                   <testFilesIncluded>                 
+                  <!-- //指定运行的jmeter脚本 -->                     	
+                            <jMeterTestFile>testplan.jmx</jMeterTestFile>            
+                            <jMeterTestFile>testmaven1.jmx</jMeterTestFile>            
+                            <jMeterTestFile>testmaven2.jmx</jMeterTestFile>    
+                     <!-- 
+                     	//使用正则表达式
+                      <jMeterTestFile>test*.jmx</jMeterTestFile>  -->
+                        </testFilesIncluded>                       
+                         <!-- 指定jmx运行目录 
+                        <testFilesDirectory>D:\workspaceN\maven2jmeter\src\test\jmeter\case1</testFilesDirectory>
+                        -->
+						<!-- 指定jtl生成目录 -->
+						<resultsDirectory>${jmeter.result.jtl.dir}</resultsDirectory>
+                </configuration>
+              <executions>
+                   <execution>
+                       <id>jmeter-tests</id>
+                       <phase>verify</phase>
+					   <!--脚本所在的文件夹 -->
+                       <goals>
+                           <goal>jmeter</goal>
+                       </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+			<!--根据xsl模版把jtl文件转换成html，官网地址： http://www.mojohaus.org/xml-maven-plugin/examples/transform-saxon.html-->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>xml-maven-plugin</artifactId>
+                <version>1.0-beta-3</version>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>transform</goal>
+                        </goals>
+                    </execution>
+                </executions> 
+            <configuration>
+                    <transformationSets>
+                    <!-- 可以根据不同的模版，同事生成多个报告
+                        <transformationSet>
+                            <dir>${jmeter.result.jtl.dir}</dir>
+                            <stylesheet>src\test\resources\jmeter.results.shanhe.me.xsl</stylesheet>
+                            <outputDir>${jmeter.result.html.dir}</outputDir>
+                            <fileMappers>
+                                <fileMapper
+                                    implementation="org.codehaus.plexus.components.io.filemappers.FileExtensionMapper">
+                                    <targetExtension>html</targetExtension>
+                                </fileMapper>
+                            </fileMappers>
+                        </transformationSet> -->
+                        <transformationSet>
+                            <dir>${jmeter.result.jtl.dir}</dir>
+                            <stylesheet>src\test\resources\jmeter.results.shanhe.me.xsl</stylesheet>
+                            <outputDir>${jmeter.result.html.dir}</outputDir>
+                           <!-- 把jtl格式转传承html -->
+                            <fileMappers>
+                                <fileMapper
+                                    implementation="org.codehaus.plexus.components.io.filemappers.FileExtensionMapper">
+                                    <targetExtension>html</targetExtension>
+                                </fileMapper>
+                            </fileMappers>
+                        </transformationSet>
+                    </transformationSets>
+                </configuration>
+                <!-- using XSLT 2.0 -->
+                 <dependencies>
+                   <dependency>
+                   <groupId>net.sf.saxon</groupId>
+                   <artifactId>saxon</artifactId>
+                   <version>8.7</version>
+                   </dependency>
+               </dependencies>
+            </plugin>
+            </plugins>
+        </build>
 </project>
